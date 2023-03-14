@@ -17,7 +17,7 @@ export interface Company {
 	bs: string;
 }
 
-export interface ServerResponseUserList {
+export interface User {
 	id: number;
 	name: string;
 	username: string;

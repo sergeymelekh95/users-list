@@ -12,18 +12,31 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { ServerResponseUserList } from '../models';
+import { User } from '../models';
 import Highlighter from 'react-highlight-words';
+import { useActions } from '../hooks/useActions';
+import { useAppSelector } from '../hooks/redux';
 
 interface ITable {
-	users: ServerResponseUserList[];
+	users: User[];
 }
 
 export const Table: React.FC<ITable> = ({ users }) => {
 	const [search, setSearch] = useState<string[]>(['']);
+	const { tableUsers } = useAppSelector((state) => state.usersList);
+	const { deleteUser, resetFilter } = useActions();
 
-	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		setSearch(e.target.value.split(' '));
+	};
+
+	const handleDelete = (id: number): void => {
+		deleteUser(id);
+	};
+
+	const handleReset = (): void => {
+		setSearch(['']);
+		resetFilter();
 	};
 
 	return (
@@ -36,8 +49,11 @@ export const Table: React.FC<ITable> = ({ users }) => {
 						id='search'
 						label='Search...'
 						variant='outlined'
+						value={search.join(' ')}
 					/>
-					<Button variant='contained'>Reset</Button>
+					<Button onClick={handleReset} variant='contained'>
+						Reset
+					</Button>
 				</Toolbar>
 			</Box>
 			<TableContainer sx={{ mb: 4 }} component={Paper}>
@@ -51,34 +67,39 @@ export const Table: React.FC<ITable> = ({ users }) => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{users.map((users) => (
+						{tableUsers.map((user) => (
 							<TableRow
-								key={users.email}
+								key={user.email}
 								sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 							>
 								<TableCell component='th' scope='row'>
 									<Highlighter
 										searchWords={[...search]}
 										autoEscape={true}
-										textToHighlight={users.name}
+										textToHighlight={user.name}
 									/>
 								</TableCell>
 								<TableCell component='th' scope='row'>
 									<Highlighter
 										searchWords={[...search]}
 										autoEscape={true}
-										textToHighlight={users.username}
+										textToHighlight={user.username}
 									/>
 								</TableCell>
 								<TableCell>
 									<Highlighter
 										searchWords={[...search]}
 										autoEscape={true}
-										textToHighlight={users.email}
+										textToHighlight={user.email}
 									/>
 								</TableCell>
 								<TableCell align='right'>
-									<Button variant='contained'>Delete</Button>
+									<Button
+										onClick={() => handleDelete(user.id)}
+										variant='contained'
+									>
+										Delete
+									</Button>
 								</TableCell>
 							</TableRow>
 						))}

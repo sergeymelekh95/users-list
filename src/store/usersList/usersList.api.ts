@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { ServerResponseUserList } from '../../models';
+import { User } from '../../models';
 
 export const usersListApi = createApi({
 	reducerPath: 'usersList/api',
@@ -7,7 +7,7 @@ export const usersListApi = createApi({
 		baseUrl: 'https://jsonplaceholder.typicode.com/',
 	}),
 	endpoints: (build) => ({
-		getItems: build.query<ServerResponseUserList[], void>({
+		getItems: build.query<User[], void>({
 			query: () => ({
 				url: 'users',
 			}),
