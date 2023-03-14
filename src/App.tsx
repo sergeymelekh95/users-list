@@ -1,4 +1,6 @@
+import { Container } from '@mui/material';
 import React from 'react';
+import { Header } from './components/Header';
 import { Table } from './components/Table';
 import { useGetItemsQuery } from './store/usersList/usersList.api';
 
@@ -9,5 +11,10 @@ export const App = () => {
 		data: users,
 	} = useGetItemsQuery();
 
-	return <div className='App'>{users && <Table users={users} />}</div>;
+	return (
+		<>
+			<Header />
+			<Container>{users && <Table users={users} />}</Container>
+		</>
+	);
 };
