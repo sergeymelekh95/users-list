@@ -1,7 +1,14 @@
 import React from 'react';
+import { useGetItemsQuery } from './store/usersList/usersList.api';
 
-function App() {
+export const App = () => {
+	const {
+		isFetching: isFetchingUsers,
+		isError: isErrorUsers,
+		data: users,
+	} = useGetItemsQuery();
+
+	console.log(users);
+
 	return <div className='App'>hello users list</div>;
-}
-
-export default App;
+};
