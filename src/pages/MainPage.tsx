@@ -20,5 +20,5 @@ export const MainPage: React.FC = () => {
 		}
 	}, [users]);
 
-	return <Container>{users && <Table users={users} />}</Container>;
+	return <Container>{users && <Table />}</Container>;
 };

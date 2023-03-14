@@ -1,30 +1,35 @@
-import React, { useState } from 'react';
 import {
 	Box,
 	Button,
+	Link,
 	Table as MuiTable,
 	TextField,
 	Toolbar,
 } from '@mui/material';
+import Paper from '@mui/material/Paper';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { User } from '../models';
+import React, { useEffect, useState } from 'react';
 import Highlighter from 'react-highlight-words';
-import { useActions } from '../hooks/useActions';
 import { useAppSelector } from '../hooks/redux';
+import { useActions } from '../hooks/useActions';
+import { User } from '../models';
+import { Modal } from './Modal';
 
-interface ITable {
-	users: User[];
-}
-
-export const Table: React.FC<ITable> = ({ users }) => {
+export const Table: React.FC = () => {
 	const [search, setSearch] = useState<string[]>(['']);
 	const { tableUsers } = useAppSelector((state) => state.usersList);
 	const { deleteUser, resetFilter } = useActions();
+	const [open, setOpen] = React.useState(false);
+	const [clickedUser, setClickedUser] = useState<User | null>(null);
+
+	const handleClose = (): void => {
+		setOpen(false);
+		setClickedUser(null);
+	};
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		setSearch(e.target.value.split(' '));
@@ -38,6 +43,14 @@ export const Table: React.FC<ITable> = ({ users }) => {
 		setSearch(['']);
 		resetFilter();
 	};
+
+	useEffect(() => {
+		if (clickedUser) {
+			setOpen(true);
+		}
+	}, [clickedUser]);
+
+	console.log('render table');
 
 	return (
 		<>
@@ -69,15 +82,21 @@ export const Table: React.FC<ITable> = ({ users }) => {
 					<TableBody>
 						{tableUsers.map((user) => (
 							<TableRow
-								key={user.email}
+								key={user.id}
 								sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 							>
 								<TableCell component='th' scope='row'>
-									<Highlighter
-										searchWords={[...search]}
-										autoEscape={true}
-										textToHighlight={user.name}
-									/>
+									<Link
+										onClick={() => setClickedUser(user)}
+										component='button'
+										variant='body2'
+									>
+										<Highlighter
+											searchWords={[...search]}
+											autoEscape={true}
+											textToHighlight={user.name}
+										/>
+									</Link>
 								</TableCell>
 								<TableCell component='th' scope='row'>
 									<Highlighter
@@ -106,6 +125,9 @@ export const Table: React.FC<ITable> = ({ users }) => {
 					</TableBody>
 				</MuiTable>
 			</TableContainer>
+			{clickedUser && (
+				<Modal user={clickedUser} handleClose={handleClose} open={open} />
+			)}
 		</>
 	);
 };
