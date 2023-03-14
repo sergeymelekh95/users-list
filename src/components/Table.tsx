@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Box,
 	Button,
@@ -13,24 +13,31 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { ServerResponseUserList } from '../models';
+import Highlighter from 'react-highlight-words';
 
 interface ITable {
 	users: ServerResponseUserList[];
 }
 
 export const Table: React.FC<ITable> = ({ users }) => {
-	console.log(users);
+	const [search, setSearch] = useState<string[]>(['']);
+
+	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearch(e.target.value.split(' '));
+	};
+
 	return (
 		<>
 			<Box sx={{ mb: 4 }}>
 				<Toolbar style={{ padding: 0 }} sx={{ display: 'flex', gap: 2 }}>
 					<TextField
+						onChange={handleSearch}
 						fullWidth
-						id='standard-basic'
-						label='Standard'
+						id='search'
+						label='Search...'
 						variant='outlined'
 					/>
-					<Button variant='contained'>Clear</Button>
+					<Button variant='contained'>Reset</Button>
 				</Toolbar>
 			</Box>
 			<TableContainer sx={{ mb: 4 }} component={Paper}>
@@ -46,16 +53,30 @@ export const Table: React.FC<ITable> = ({ users }) => {
 					<TableBody>
 						{users.map((users) => (
 							<TableRow
-								key={users.name}
+								key={users.email}
 								sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 							>
 								<TableCell component='th' scope='row'>
-									{users.name}
+									<Highlighter
+										searchWords={[...search]}
+										autoEscape={true}
+										textToHighlight={users.name}
+									/>
 								</TableCell>
 								<TableCell component='th' scope='row'>
-									{users.username}
+									<Highlighter
+										searchWords={[...search]}
+										autoEscape={true}
+										textToHighlight={users.username}
+									/>
 								</TableCell>
-								<TableCell>{users.email}</TableCell>
+								<TableCell>
+									<Highlighter
+										searchWords={[...search]}
+										autoEscape={true}
+										textToHighlight={users.email}
+									/>
+								</TableCell>
 								<TableCell align='right'>
 									<Button variant='contained'>Delete</Button>
 								</TableCell>
