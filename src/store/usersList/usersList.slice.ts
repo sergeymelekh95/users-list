@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-// import { Item } from '../../models';
 
 interface usersListState {}
 
@@ -9,7 +8,7 @@ export const usersListSlice = createSlice({
 	name: 'usersList',
 	initialState,
 	reducers: {
-		setItems(state, action: PayloadAction<any>) {},
+		// setItems(state, action: PayloadAction<any>) {},
 	},
 });
 

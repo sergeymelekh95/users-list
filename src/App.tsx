@@ -1,4 +1,5 @@
 import React from 'react';
+import { Table } from './components/Table';
 import { useGetItemsQuery } from './store/usersList/usersList.api';
 
 export const App = () => {
@@ -8,7 +9,5 @@ export const App = () => {
 		data: users,
 	} = useGetItemsQuery();
 
-	console.log(users);
-
-	return <div className='App'>hello users list</div>;
+	return <div className='App'>{users && <Table users={users} />}</div>;
 };
