@@ -1,20 +1,26 @@
-import { Box, Button, Container, TextField, Toolbar } from '@mui/material';
+import {
+	Box,
+	Button,
+	Container,
+	TextField,
+	Toolbar,
+	Alert,
+	AlertTitle,
+	LinearProgress,
+	InputAdornment,
+} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../hooks/redux';
 import { useActions } from '../hooks/useActions';
 import { User } from '../models';
 import { Modal } from '../components/Modal';
-import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import { useGetUsersQuery } from '../store/usersList/usersList.api';
 import { Table } from '../components/Table';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import LinearProgress from '@mui/material/LinearProgress';
 
 export const MainPage: React.FC = () => {
 	const [search, setSearch] = useState<string[]>(['']);
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = React.useState<boolean>(false);
 	const [userInfo, setUserInfo] = useState<User | null>(null);
 
 	const { currentUsers } = useAppSelector((state) => state.usersList);
@@ -56,8 +62,6 @@ export const MainPage: React.FC = () => {
 		}
 	}, [userInfo]);
 
-	console.log('main page');
-
 	return (
 		<Container>
 			{isFetchingUsers && <LinearProgress color='success' />}
@@ -67,7 +71,7 @@ export const MainPage: React.FC = () => {
 					Something was wrong <strong>try again later!</strong>
 				</Alert>
 			)}
-			{!isErrorUsers && !isFetchingUsers && currentUsers && (				
+			{!isErrorUsers && !isFetchingUsers && currentUsers && (
 				<>
 					<Box sx={{ mb: 4 }}>
 						<Toolbar style={{ padding: 0 }} sx={{ display: 'flex', gap: 2 }}>

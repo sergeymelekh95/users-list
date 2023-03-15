@@ -1,6 +1,11 @@
-import { Avatar, Box, Link, Modal as MuiModal } from '@mui/material';
-import Typography from '@mui/material/Typography';
 import React from 'react';
+import {
+	Avatar,
+	Box,
+	Link,
+	Modal as MuiModal,
+	Typography,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { User } from '../models';
 
@@ -14,6 +19,10 @@ const modalStyle = {
 	bgcolor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
+};
+
+const linkStyle = {
+	ml: 1,
 };
 
 const textStyle = {
@@ -38,8 +47,6 @@ const StyledBox = styled('div')({
 export const Modal: React.FC<IModal> = ({ handleClose, open, user }) => {
 	const { name, email, phone, website, address, company } = user;
 
-	console.log('modal render');
-
 	return (
 		<div>
 			<MuiModal open={open} onClose={handleClose}>
@@ -59,13 +66,13 @@ export const Modal: React.FC<IModal> = ({ handleClose, open, user }) => {
 					</Typography>
 					<Typography sx={textStyle}>
 						Phone:{' '}
-						<Link sx={{ ml: 1 }} href={`tel:${phone}`}>
+						<Link sx={linkStyle} href={`tel:${phone}`}>
 							{phone}
 						</Link>
 					</Typography>
 					<Typography sx={{ mb: 1, fontSize: 12 }} color='text.secondary'>
 						Website:
-						<Link sx={{ ml: 1 }} target='_blank' href={`https://${website}`}>
+						<Link sx={linkStyle} target='_blank' href={`https://${website}`}>
 							{website}
 						</Link>
 					</Typography>

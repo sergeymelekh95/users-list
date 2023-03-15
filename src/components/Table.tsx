@@ -1,13 +1,17 @@
 import React from 'react';
-import { Button, Link, Table as MuiTable } from '@mui/material';
-import Paper from '@mui/material/Paper';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import Highlighter from 'react-highlight-words';
+import {
+	Button,
+	Link,
+	Table as MuiTable,
+	Paper,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
-import TableRow from '@mui/material/TableRow';
+import Highlighter from 'react-highlight-words';
 import { User } from '../models';
 
 interface ITable {
@@ -27,7 +31,6 @@ export const Table: React.FC<ITable> = ({
 	search,
 	handleDelete,
 }) => {
-	console.log('render table');
 	return (
 		<TableContainer sx={{ mb: 4 }} component={Paper}>
 			<MuiTable sx={{ minWidth: 700 }} size='small' aria-label='simple table'>

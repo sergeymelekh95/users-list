@@ -1,8 +1,5 @@
 import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 
 export const Header: React.FC = () => {
