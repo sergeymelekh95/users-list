@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../models';
 
 interface usersListState {
-	users: User[];
-	tableUsers: User[];
+	initialUsers: User[];
+	currentUsers: User[];
 }
 
 const initialState: usersListState = {
-	users: [],
-	tableUsers: [],
+	initialUsers: [],
+	currentUsers: [],
 };
 
 export const usersListSlice = createSlice({
@@ -16,16 +16,16 @@ export const usersListSlice = createSlice({
 	initialState,
 	reducers: {
 		setUsers(state, action: PayloadAction<User[]>) {
-			state.users = action.payload;
-			state.tableUsers = action.payload;
+			state.initialUsers = action.payload;
+			state.currentUsers = action.payload;
 		},
 		deleteUser(state, action: PayloadAction<number>) {
-			state.tableUsers = state.tableUsers.filter(
+			state.currentUsers = state.currentUsers.filter(
 				(user) => user.id !== action.payload
 			);
 		},
 		resetFilter(state) {
-			state.tableUsers = state.users;
+			state.currentUsers = state.initialUsers;
 		},
 	},
 });

@@ -4,10 +4,10 @@ import { User } from '../../models';
 export const usersListApi = createApi({
 	reducerPath: 'usersList/api',
 	baseQuery: fetchBaseQuery({
-		baseUrl: 'https://jsonplaceholder.typicode.com/',
+		baseUrl: process.env.REACT_APP_BASE_URL,
 	}),
 	endpoints: (build) => ({
-		getItems: build.query<User[], void>({
+		getUsers: build.query<User[], void>({
 			query: () => ({
 				url: 'users',
 			}),
@@ -15,4 +15,4 @@ export const usersListApi = createApi({
 	}),
 });
 
-export const { useGetItemsQuery } = usersListApi;
+export const { useGetUsersQuery } = usersListApi;
