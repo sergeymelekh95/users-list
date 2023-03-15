@@ -1,7 +1,11 @@
-import React from 'react';
+import { Header } from './components/Header';
+import { MainPage } from './pages/MainPage';
 
-function App() {
-	return <div className='App'>hello users list</div>;
-}
-
-export default App;
+export const App = () => {
+	return (
+		<>
+			<Header />
+			<MainPage />
+		</>
+	);
+};
