@@ -8,6 +8,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import { useGetUsersQuery } from '../store/usersList/usersList.api';
 import { Table } from '../components/Table';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import LinearProgress from '@mui/material/LinearProgress';
 
 export const MainPage: React.FC = () => {
 	const [search, setSearch] = useState<string[]>(['']);
@@ -57,7 +60,14 @@ export const MainPage: React.FC = () => {
 
 	return (
 		<Container>
-			{currentUsers && (
+			{isFetchingUsers && <LinearProgress color='success' />}
+			{isErrorUsers && (
+				<Alert severity='error'>
+					<AlertTitle>Error</AlertTitle>
+					Something was wrong <strong>try again later!</strong>
+				</Alert>
+			)}
+			{!isErrorUsers && !isFetchingUsers && currentUsers && (				
 				<>
 					<Box sx={{ mb: 4 }}>
 						<Toolbar style={{ padding: 0 }} sx={{ display: 'flex', gap: 2 }}>
